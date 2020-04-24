@@ -15,6 +15,8 @@ public class FileManager {
 	private boolean recursive;
 	private boolean numberFiles;
 
+	public FileManager() {}
+	
 	public FileManager(String sourceDirectory) {
 		this.sourceDirectory = sourceDirectory;
 	}
@@ -33,79 +35,151 @@ public class FileManager {
 		this.numberFiles = numberFiles;
 	}
 
+	/**
+	 * Returns entire file array
+	 * @return 
+	 */
 	public ArrayList<File> getDirectoryFiles() {
 		return directoryFiles;
 	}
 
-	public void setDirectoryFiles(ArrayList<File> directoryFiles) {
-		this.directoryFiles = directoryFiles;
-	}
-
+	/**
+	 * Returns source directory
+	 * @return 
+	 */
 	public String getSourceDirectory() {
 		return sourceDirectory;
 	}
 
+	/**
+	 * Sets source directory
+	 * @param sourceDirectory 
+	 */
 	public void setSourceDirectory(String sourceDirectory) {
 		this.sourceDirectory = sourceDirectory;
 	}
 
+	/**
+	 * Returns file destination directory
+	 * @return 
+	 */
 	public String getDestDirectory() {
 		return destDirectory;
 	}
 
+	/**
+	 * Sets file destination directory
+	 * @param destDirectory 
+	 */
 	public void setDestDirectory(String destDirectory) {
 		this.destDirectory = destDirectory;
 	}
 
+	/**
+	 * Gets file prefix
+	 * @return 
+	 */
 	public String getFilePrefix() {
 		return filePrefix;
 	}
 
+	/**
+	 * Sets file prefix
+	 * @param filePrefix 
+	 */
 	public void setFilePrefix(String filePrefix) {
 		this.filePrefix = filePrefix;
 	}
 
+	/**
+	 * Returns file suffix
+	 * @return 
+	 */
 	public String getFileSuffix() {
 		return fileSuffix;
 	}
 
+	/**
+	 * Sets file suffix
+	 * @param fileSuffix 
+	 */
 	public void setFileSuffix(String fileSuffix) {
 		this.fileSuffix = fileSuffix;
 	}
 
+	/**
+	 * Returns recursive status
+	 * @return 
+	 */
 	public boolean isRecursive() {
 		return recursive;
 	}
 
+	/**
+	 * Sets recursive status
+	 * @param recursive 
+	 */
 	public void setRecursive(boolean recursive) {
 		this.recursive = recursive;
 	}
 
+	/**
+	 * Returns number file status
+	 * @return 
+	 */
 	public boolean isNumberFiles() {
 		return numberFiles;
 	}
 
+	/**
+	 * Sets number file status
+	 * @param numberFiles 
+	 */
 	public void setNumberFiles(boolean numberFiles) {
 		this.numberFiles = numberFiles;
 	}
 	
+	/**
+	 * Populates file list
+	 */
+	public void populateFileList() {
+		
+	}
+	
+	/**
+	 * Sorts files in listing alphabetically
+	 */
 	public void sortAlphabet() {
 		
 	}
 	
+	/**
+	 * Sorts files in listing reverse alphabetically
+	 */
 	public void sortRevAlphabet() {
 		
 	}
 	
+	/**
+	 * Sorts files in listing by file size, increasing
+	 */
 	public void sortSizeIncreasing() {
 		
 	}
 	
+	/**
+	 * Sorts files in listing by file size, decreasing
+	 */
 	public void sortSizeDecreasing() {
 		
 	}
 	
+	/**
+	 * Exports file names
+	 */
 	public void exportFiles() {
 		
 	}
+	
+	
 }
