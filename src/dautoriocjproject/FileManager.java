@@ -1,13 +1,14 @@
 package dautoriocjproject;
 import java.util.*;
 import java.io.*;
+import java.nio.*;
 
 /**
  *
  * @author CJ D'Autorio
  */
 public class FileManager {
-	private ArrayList<File> directoryFiles = new ArrayList();
+	private ArrayList<File> fileList = new ArrayList();
 	private String sourceDirectory;
 	private String destDirectory;
 	private String filePrefix;
@@ -39,8 +40,8 @@ public class FileManager {
 	 * Returns entire file array
 	 * @return 
 	 */
-	public ArrayList<File> getDirectoryFiles() {
-		return directoryFiles;
+	public ArrayList<File> getFileList() {
+		return fileList;
 	}
 
 	/**
@@ -140,10 +141,59 @@ public class FileManager {
 	}
 	
 	/**
-	 * Populates file list
+	 * Adds a file to the file arraylist
+	 * @param file 
 	 */
-	public void populateFileList() {
+	public void addFile(File file) {
+		fileList.add(file);
+	}
+	
+	/**
+	 * Returns array of files without recursion
+	 * @param directory
+	 * @return
+	 */
+	public ArrayList<File> listFiles(File directory) {
+		fileList = new ArrayList();
+		try {
+			Collections.addAll(fileList, directory.listFiles());
+			for (int i = 0; i < fileList.size(); i++) {
+				logFile(fileList.get(i));
+			}
+		} catch (NullPointerException e) {
+			System.out.println("No files in directory.");
+		}
 		
+		return fileList;
+	}
+	
+	/**
+	 * Returns array of files with recursion
+	 * @param directory
+	 * @return 
+	 */
+	public ArrayList<File> listFilesRecursive(File directory) {
+		fileList = new ArrayList();
+		Collections.addAll(fileList, directory.listFiles());
+		
+		for (int i = 0; i < fileList.size(); i++) {
+			if (fileList.get(i).isDirectory()) {
+				Collections.addAll(fileList, fileList.get(i).listFiles());
+				logFile(fileList.get(i));
+			} else {
+				logFile(fileList.get(i));
+			}
+		}
+		
+		return fileList;
+	}
+	
+	/**
+	 * Logs file passed to console. Used mainly for debugging.
+	 * @param file 
+	 */
+	public void logFile(File file) {
+		System.out.println("File added: " + file.getName());
 	}
 	
 	/**
