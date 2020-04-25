@@ -49,6 +49,8 @@ public class DisplayWindow extends javax.swing.JFrame {
         SetSuffixButton = new javax.swing.JButton();
         NumberFilesLabel = new javax.swing.JLabel();
         NumberFilesToggle = new javax.swing.JToggleButton();
+        SortByComboBox = new javax.swing.JComboBox<>();
+        SortByButton = new javax.swing.JButton();
 
         FileBrowserFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -187,6 +189,15 @@ public class DisplayWindow extends javax.swing.JFrame {
             }
         });
 
+        SortByComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ABC", "ZYX", "Size (Inc)", "Size (Dec)" }));
+
+        SortByButton.setText("Sort By");
+        SortByButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SortByButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -199,33 +210,37 @@ public class DisplayWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DirectoryLocationField, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(OpenFolderBrowserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(OpenFolderBrowserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(359, 359, 359))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(FileScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(PrefixTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(SetPrefixButton))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(SuffixTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(SetSuffixButton))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(17, 17, 17)
-                                        .addComponent(RecursiveLabel))
-                                    .addComponent(NumberFilesLabel))
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(RecursiveToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(NumberFilesToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(137, 137, 137))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(PrefixTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(SetPrefixButton))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(SuffixTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(SetSuffixButton))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(55, 55, 55)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(17, 17, 17)
+                                            .addComponent(RecursiveLabel))
+                                        .addComponent(NumberFilesLabel))
+                                    .addGap(12, 12, 12)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(RecursiveToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(NumberFilesToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(SortByButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(SortByComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +268,11 @@ public class DisplayWindow extends javax.swing.JFrame {
                                 .addComponent(NumberFilesToggle))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addComponent(NumberFilesLabel)))))
+                                .addComponent(NumberFilesLabel)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SortByComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SortByButton))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(OpenFolderBrowserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -358,6 +377,33 @@ public class DisplayWindow extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_NumberFilesToggleActionPerformed
 
+    private void SortByButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByButtonActionPerformed
+		switch (SortByComboBox.getSelectedIndex()) {
+			case 0:
+				fileList = fileManager.sortAlphabet();
+				populateFileTable();
+				System.out.println("Sorting Alphabetically");
+				break;
+			case 1:
+				fileList = fileManager.sortRevAlphabet();
+				populateFileTable();
+				System.out.println("Sorting Reverse Alphabetically");
+				break;
+			case 2:
+				fileList = fileManager.sortSizeIncreasing();
+				populateFileTable();
+				System.out.println("Sorting by Size (Increasing)");
+				break;
+			case 3:
+				fileList = fileManager.sortSizeDecreasing();
+				populateFileTable();
+				System.out.println("Sorting by Size (Decreasing)");
+				break;
+			default:
+				System.out.println("Could not sort.");
+		}
+    }//GEN-LAST:event_SortByButtonActionPerformed
+
 	private void populateFileTable() {
 		for (int i = 0; i < fileList.size(); i++) {
 			// If file is not a directory
@@ -366,7 +412,7 @@ public class DisplayWindow extends javax.swing.JFrame {
 				FileTable.getModel().setValueAt(fileList.get(i).getName(), i, 0);
 				// TODO List File Types
 				// Size
-				FileTable.getModel().setValueAt(fileList.get(i).length() / 1000, i, 2);
+				FileTable.getModel().setValueAt(fileList.get(i).length() / 1000.00f, i, 2);
 				// Old Names
 				FileTable.getModel().setValueAt(fileList.get(i).getName(), i, 4);
 				System.out.println("File listed: " + fileList.get(i).getName());
@@ -389,6 +435,8 @@ public class DisplayWindow extends javax.swing.JFrame {
     private javax.swing.JToggleButton RecursiveToggle;
     private javax.swing.JButton SetPrefixButton;
     private javax.swing.JButton SetSuffixButton;
+    private javax.swing.JButton SortByButton;
+    private javax.swing.JComboBox<String> SortByComboBox;
     private javax.swing.JTextField SuffixTextField;
     // End of variables declaration//GEN-END:variables
 }

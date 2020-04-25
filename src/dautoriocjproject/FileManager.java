@@ -199,29 +199,45 @@ public class FileManager {
 	/**
 	 * Sorts files in listing alphabetically
 	 */
-	public void sortAlphabet() {
-		
+	public ArrayList<File> sortAlphabet() {
+		// TODO This
+		return fileList;
 	}
 	
 	/**
 	 * Sorts files in listing reverse alphabetically
 	 */
-	public void sortRevAlphabet() {
-		
+	public ArrayList<File> sortRevAlphabet() {
+		// TODO This
+		return fileList;
 	}
 	
 	/**
 	 * Sorts files in listing by file size, increasing
 	 */
-	public void sortSizeIncreasing() {
+	public ArrayList<File> sortSizeIncreasing() {
+		int tempIndex = 0;
+		File tempFile = fileList.get(0);
+		for (int i = 1; i < fileList.size(); i++) {
+			if (fileList.get(i).length() < fileList.get(i-1).length()) {
+				fileList.set(i - 1, fileList.get(i));
+				fileList.set(i, tempFile);
+				tempFile = fileList.get(i);
+				tempIndex = i;
+			} else {
+				fileList.get(i).length();
+			}
+		}
 		
+		return fileList;
 	}
 	
 	/**
 	 * Sorts files in listing by file size, decreasing
 	 */
-	public void sortSizeDecreasing() {
+	public ArrayList<File> sortSizeDecreasing() {
 		
+		return fileList;
 	}
 	
 	/**
@@ -230,6 +246,4 @@ public class FileManager {
 	public void exportFiles() {
 		
 	}
-	
-	
 }
