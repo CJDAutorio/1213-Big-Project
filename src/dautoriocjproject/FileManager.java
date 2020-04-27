@@ -7,34 +7,14 @@ import java.nio.*;
  *
  * @author CJ D'Autorio
  */
-public class FileManager {
+public class FileManager{
 	private ArrayList<File> fileList = new ArrayList();
-	private String sourceDirectory;
-	private String destDirectory;
 	private String filePrefix;
 	private String fileSuffix;
 	private boolean recursive;
 	private boolean numberFiles;
 
 	public FileManager() {}
-	
-	public FileManager(String sourceDirectory) {
-		this.sourceDirectory = sourceDirectory;
-	}
-
-	public FileManager(String sourceDirectory, String destDirectory) {
-		this.sourceDirectory = sourceDirectory;
-		this.destDirectory = destDirectory;
-	}
-
-	public FileManager(String sourceDirectory, String destDirectory, String filePrefix, String fileSuffix, boolean recursive, boolean numberFiles) {
-		this.sourceDirectory = sourceDirectory;
-		this.destDirectory = destDirectory;
-		this.filePrefix = filePrefix;
-		this.fileSuffix = fileSuffix;
-		this.recursive = recursive;
-		this.numberFiles = numberFiles;
-	}
 
 	/**
 	 * Returns entire file array
@@ -42,38 +22,6 @@ public class FileManager {
 	 */
 	public ArrayList<File> getFileList() {
 		return fileList;
-	}
-
-	/**
-	 * Returns source directory
-	 * @return 
-	 */
-	public String getSourceDirectory() {
-		return sourceDirectory;
-	}
-
-	/**
-	 * Sets source directory
-	 * @param sourceDirectory 
-	 */
-	public void setSourceDirectory(String sourceDirectory) {
-		this.sourceDirectory = sourceDirectory;
-	}
-
-	/**
-	 * Returns file destination directory
-	 * @return 
-	 */
-	public String getDestDirectory() {
-		return destDirectory;
-	}
-
-	/**
-	 * Sets file destination directory
-	 * @param destDirectory 
-	 */
-	public void setDestDirectory(String destDirectory) {
-		this.destDirectory = destDirectory;
 	}
 
 	/**
@@ -200,7 +148,7 @@ public class FileManager {
 	 * Sorts files in listing alphabetically
 	 */
 	public ArrayList<File> sortAlphabet() {
-		// TODO This
+		Collections.sort(fileList, compareNames);
 		return fileList;
 	}
 	
@@ -208,7 +156,8 @@ public class FileManager {
 	 * Sorts files in listing reverse alphabetically
 	 */
 	public ArrayList<File> sortRevAlphabet() {
-		// TODO This
+		Collections.sort(fileList, compareNames);
+		Collections.sort(fileList, Collections.reverseOrder());
 		return fileList;
 	}
 	
@@ -216,19 +165,7 @@ public class FileManager {
 	 * Sorts files in listing by file size, increasing
 	 */
 	public ArrayList<File> sortSizeIncreasing() {
-		int tempIndex = 0;
-		File tempFile = fileList.get(0);
-		for (int i = 1; i < fileList.size(); i++) {
-			if (fileList.get(i).length() < fileList.get(i-1).length()) {
-				fileList.set(i - 1, fileList.get(i));
-				fileList.set(i, tempFile);
-				tempFile = fileList.get(i);
-				tempIndex = i;
-			} else {
-				fileList.get(i).length();
-			}
-		}
-		
+		Collections.sort(fileList, compareSize);
 		return fileList;
 	}
 	
@@ -236,14 +173,61 @@ public class FileManager {
 	 * Sorts files in listing by file size, decreasing
 	 */
 	public ArrayList<File> sortSizeDecreasing() {
+		Collections.sort(fileList, compareSize);
+		Collections.sort(fileList, Collections.reverseOrder());
 		
 		return fileList;
 	}
 	
-	/**
-	 * Exports file names
-	 */
-	public void exportFiles() {
+	
+	Comparator<File> compareSize = new Comparator<File>(){
+		@Override
+		public int compare(File file1, File file2) {
+			double size1 = file1.length();
+			double size2 = file2.length();
+			
+			if (size1 > size2) {
+				return 1;
+			} else if (size1 < size2) {
+				return -1;
+			} else {
+				return 0;
+			}
+		}
+	};
+	
+		Comparator<File> compareNames = new Comparator<File>(){
+		@Override
+		public int compare(File file1, File file2) {
+			int name1 = file1.getName().charAt(0);
+			int name2 = file2.getName().charAt(0);
+			
+			return name1 - name2;
+		}
+	};
 		
+	/**
+	 * Returns file name without file extension
+	 * @param file
+	 * @return 
+	 */
+	public String getFileName(File file) {
+		return file.getName().substring(0, file.getName().lastIndexOf("."));
+	}
+	
+	/**
+	 * Returns file extension
+	 * @param file
+	 * @return 
+	 */
+	public String getFileExtension(File file) {
+		return file.getName().substring(file.getName().lastIndexOf("."));
+	}
+	
+	/**
+	 * Renames file
+	 */
+	public boolean renameFile(String name, File file) {
+		return file.renameTo(file);
 	}
 }

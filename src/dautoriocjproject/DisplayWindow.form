@@ -47,20 +47,31 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="ConfirmDirectoryButton" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="FileNumberLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="ConfirmDirectoryButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="DirectoryLocationField" min="-2" pref="238" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="DirectoryLocationField" alignment="0" min="-2" pref="238" max="-2" attributes="0"/>
+                          <Component id="NumberFilesNumberLabel" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="OpenFolderBrowserButton" min="-2" pref="23" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="359" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="ExportLocationField" min="-2" pref="238" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="OpenFolderBrowserExport" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="ExportButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="FileScrollPane" min="-2" pref="600" max="-2" attributes="0"/>
-                      <EmptySpace pref="55" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
@@ -95,18 +106,18 @@
                               <Component id="SortByComboBox" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="FileScrollPane" min="-2" pref="384" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="PrefixTextField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -126,7 +137,7 @@
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Component id="NumberFilesToggle" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -141,14 +152,23 @@
                           <Component id="SortByButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="FileScrollPane" min="-2" pref="384" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="FileNumberLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="NumberFilesNumberLabel" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="7" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="OpenFolderBrowserButton" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="ConfirmDirectoryButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="DirectoryLocationField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="OpenFolderBrowserExport" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="ExportLocationField" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="ExportButton" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -166,6 +186,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="DirectoryLocationField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Source Directory"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="OpenFolderBrowserButton">
       <Properties>
@@ -187,43 +210,11 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="FileTable">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="25">
-                <Column editable="true" title="New Name" type="java.lang.String"/>
-                <Column editable="false" title="File Type" type="java.lang.String"/>
-                <Column editable="false" title="File Size (kb)" type="java.lang.String"/>
-                <Column editable="false" title="Location" type="java.lang.String"/>
-                <Column editable="false" title="Old Name" type="java.lang.String"/>
-              </Table>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="fileTableModel" type="code"/>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-              </TableColumnModel>
+              <TableColumnModel selectionModel="0"/>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
@@ -238,9 +229,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="SuffixTextField">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="TODO Fix Suffix"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="RecursiveLabel">
       <Properties>
@@ -269,7 +257,6 @@
     <Component class="javax.swing.JButton" name="SetSuffixButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Set Suffix"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SetSuffixButtonActionPerformed"/>
@@ -285,7 +272,6 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/dautoriocjproject/images/004-shape.png"/>
         </Property>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="NumberFilesToggleItemStateChanged"/>
@@ -314,6 +300,35 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SortByButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="ExportLocationField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Export Directory"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="OpenFolderBrowserExport">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/dautoriocjproject/images/001-open-folder.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Open folder browser"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenFolderBrowserExportActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="ExportButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Rename Files"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="FileNumberLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Number of Files:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="NumberFilesNumberLabel">
     </Component>
   </SubComponents>
 </Form>
