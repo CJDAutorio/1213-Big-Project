@@ -13,7 +13,7 @@ import javax.swing.table.*;
 public class DisplayWindow extends javax.swing.JFrame {
 	private boolean canExecute = false;
 	private String fileBrowserTitle = "Enter the root folder";
-	private FileManager fileManager = new FileManager();
+	private final FileManager FILE_MANAGER = new FileManager();
 	private File directory;
 	private File exportDirectory;
 	private ArrayList<File> fileList = new ArrayList();
@@ -168,6 +168,11 @@ public class DisplayWindow extends javax.swing.JFrame {
 
         ExportButton.setText("Rename Files");
         ExportButton.setEnabled(false);
+        ExportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExportButtonActionPerformed(evt);
+            }
+        });
 
         FileNumberLabel.setText("Number of Files:");
 
@@ -276,10 +281,10 @@ public class DisplayWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfirmDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmDirectoryButtonActionPerformed
-		if (fileManager.isRecursive()) {
-			fileList = fileManager.listFilesRecursive(directory);
+		if (FILE_MANAGER.isRecursive()) {
+			fileList = FILE_MANAGER.listFilesRecursive(directory);
 		} else {
-			fileList = fileManager.listFiles(directory);
+			fileList = FILE_MANAGER.listFiles(directory);
 		}
 		
 		System.out.println("Directory: " + directory.getAbsolutePath());
@@ -297,6 +302,7 @@ public class DisplayWindow extends javax.swing.JFrame {
 		int option = FileBrowser.showOpenDialog(FileBrowserFrame);
 		if (option == JFileChooser.APPROVE_OPTION) {
 			directory = FileBrowser.getSelectedFile();
+			exportDirectory = FileBrowser.getSelectedFile();
 			DirectoryLocationField.setText(directory.getAbsolutePath());
 			ExportLocationField.setText(directory.getAbsolutePath());
 			ConfirmDirectoryButton.setEnabled(true);
@@ -322,11 +328,11 @@ public class DisplayWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_RecursiveToggleActionPerformed
 
     private void RecursiveToggleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_RecursiveToggleItemStateChanged
-		if (fileManager.isRecursive()) {
-			fileManager.setRecursive(false);
+		if (FILE_MANAGER.isRecursive()) {
+			FILE_MANAGER.setRecursive(false);
 			RecursiveToggle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DAutorioCJProject/images/004-shape.png")));
 		} else {
-			fileManager.setRecursive(true);
+			FILE_MANAGER.setRecursive(true);
 			RecursiveToggle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DAutorioCJProject/images/003-accept.png")));
 		}
     }//GEN-LAST:event_RecursiveToggleItemStateChanged
@@ -338,7 +344,7 @@ public class DisplayWindow extends javax.swing.JFrame {
     private void SetPrefixButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetPrefixButtonActionPerformed
 		for (int i = 0; i < FileTable.getModel().getRowCount(); i++) {
 			if (!fileList.get(i).isDirectory()) {
-				FileTable.getModel().setValueAt(PrefixTextField.getText() + fileManager.getFileName(fileList.get(i)) + fileManager.getFileExtension(fileList.get(i)), i, 0);
+				FileTable.getModel().setValueAt(PrefixTextField.getText() + FILE_MANAGER.getFileName(fileList.get(i)) + FILE_MANAGER.getFileExtension(fileList.get(i)), i, 0);
 			}
 		}
     }//GEN-LAST:event_SetPrefixButtonActionPerformed
@@ -350,7 +356,7 @@ public class DisplayWindow extends javax.swing.JFrame {
     private void SetSuffixButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetSuffixButtonActionPerformed
 		for (int i = 0; i < FileTable.getModel().getRowCount(); i++) {
 			if (!fileList.get(i).isDirectory()) {
-				FileTable.getModel().setValueAt(fileManager.getFileName(fileList.get(i)) + SuffixTextField.getText() + fileManager.getFileExtension(fileList.get(i)), i, 0);
+				FileTable.getModel().setValueAt(FILE_MANAGER.getFileName(fileList.get(i)) + SuffixTextField.getText() + FILE_MANAGER.getFileExtension(fileList.get(i)), i, 0);
 			}
 		}
     }//GEN-LAST:event_SetSuffixButtonActionPerformed
@@ -360,16 +366,16 @@ public class DisplayWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_NumberFilesToggleItemStateChanged
 
     private void NumberFilesToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberFilesToggleActionPerformed
-		if (fileManager.isNumberFiles()) {
-			fileManager.setNumberFiles(false);
+		if (FILE_MANAGER.isNumberFiles()) {
+			FILE_MANAGER.setNumberFiles(false);
 			NumberFilesToggle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DAutorioCJProject/images/004-shape.png")));
 		} else {
 			int startNum = 0;
-			fileManager.setNumberFiles(true);
+			FILE_MANAGER.setNumberFiles(true);
 			NumberFilesToggle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DAutorioCJProject/images/003-accept.png")));
 			for (int i = 0; i < fileList.size(); i++) {
 				if (!fileList.get(i).isDirectory()) {
-					FileTable.getModel().setValueAt(FileTable.getModel().getValueAt(i, 0) + "-" + i, i, 0);
+					FileTable.getModel().setValueAt(FILE_MANAGER.getFileName(fileList.get(i)) + "-" + i + FILE_MANAGER.getFileExtension(fileList.get(i)), i, 0);
 				}
 			}
 		}
@@ -378,22 +384,22 @@ public class DisplayWindow extends javax.swing.JFrame {
     private void SortByButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByButtonActionPerformed
 		switch (SortByComboBox.getSelectedIndex()) {
 			case 0:
-				fileList = fileManager.sortAlphabet();
+				fileList = FILE_MANAGER.sortAlphabet();
 				populateFileTable();
 				System.out.println("Sorting Alphabetically");
 				break;
 			case 1:
-				fileList = fileManager.sortRevAlphabet();
+				fileList = FILE_MANAGER.sortRevAlphabet();
 				populateFileTable();
 				System.out.println("Sorting Reverse Alphabetically");
 				break;
 			case 2:
-				fileList = fileManager.sortSizeIncreasing();
+				fileList = FILE_MANAGER.sortSizeIncreasing();
 				populateFileTable();
 				System.out.println("Sorting by Size (Increasing)");
 				break;
 			case 3:
-				fileList = fileManager.sortSizeDecreasing();
+				fileList = FILE_MANAGER.sortSizeDecreasing();
 				populateFileTable();
 				System.out.println("Sorting by Size (Decreasing)");
 				break;
@@ -420,8 +426,23 @@ public class DisplayWindow extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_OpenFolderBrowserExportActionPerformed
 
+    private void ExportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExportButtonActionPerformed
+		for (int i = 0; i < fileTableModel.getRowCount(); i++) {
+			if (fileTableModel.getValueAt(i, 0) != null) {
+				FILE_MANAGER.renameFile(FileTable.getValueAt(i, 0).toString(), fileList.get(i), exportDirectory);
+			}
+		}
+    }//GEN-LAST:event_ExportButtonActionPerformed
+
+	/**
+	 * Populates the table with fileList information
+	 */
 	private void populateFileTable() {
 		int numberOfFiles = 0;
+		// Wipes the entire table before reconstructing it
+		for (int i = fileTableModel.getRowCount(); i > 0; i--) {
+			fileTableModel.removeRow(i);
+		}
 		for (int i = 0; i < fileList.size(); i++) {
 				Vector<?> rowData = null;
 				if (fileTableModel.getRowCount() < fileList.size()) {
@@ -432,7 +453,7 @@ public class DisplayWindow extends javax.swing.JFrame {
 				// New Names
 				FileTable.getModel().setValueAt(fileList.get(i).getName(), i, 0);
 				// File Types
-				FileTable.getModel().setValueAt(fileManager.getFileExtension(fileList.get(i)), i, 1);
+				FileTable.getModel().setValueAt(FILE_MANAGER.getFileExtension(fileList.get(i)), i, 1);
 				// Size
 				FileTable.getModel().setValueAt(fileList.get(i).length() / 1000.00f, i, 2);
 				// Locations

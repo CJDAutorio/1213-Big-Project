@@ -2,12 +2,13 @@ package dautoriocjproject;
 import java.util.*;
 import java.io.*;
 import java.nio.*;
+import java.nio.file.*;
 
 /**
  *
  * @author CJ D'Autorio
  */
-public class FileManager{
+public class FileManager {
 	private ArrayList<File> fileList = new ArrayList();
 	private String filePrefix;
 	private String fileSuffix;
@@ -154,6 +155,7 @@ public class FileManager{
 	
 	/**
 	 * Sorts files in listing reverse alphabetically
+	 * @return 
 	 */
 	public ArrayList<File> sortRevAlphabet() {
 		Collections.sort(fileList, compareNames);
@@ -163,6 +165,7 @@ public class FileManager{
 	
 	/**
 	 * Sorts files in listing by file size, increasing
+	 * @return 
 	 */
 	public ArrayList<File> sortSizeIncreasing() {
 		Collections.sort(fileList, compareSize);
@@ -171,6 +174,7 @@ public class FileManager{
 	
 	/**
 	 * Sorts files in listing by file size, decreasing
+	 * @return 
 	 */
 	public ArrayList<File> sortSizeDecreasing() {
 		Collections.sort(fileList, compareSize);
@@ -179,24 +183,23 @@ public class FileManager{
 		return fileList;
 	}
 	
-	
+	/**
+	 * Compares file sizes
+	 */
 	Comparator<File> compareSize = new Comparator<File>(){
 		@Override
 		public int compare(File file1, File file2) {
 			double size1 = file1.length();
 			double size2 = file2.length();
 			
-			if (size1 > size2) {
-				return 1;
-			} else if (size1 < size2) {
-				return -1;
-			} else {
-				return 0;
-			}
+			return (int) (size1 - size2);
 		}
 	};
 	
-		Comparator<File> compareNames = new Comparator<File>(){
+	/**
+	 * Compares names
+	 */
+	Comparator<File> compareNames = new Comparator<File>(){
 		@Override
 		public int compare(File file1, File file2) {
 			int name1 = file1.getName().charAt(0);
@@ -226,8 +229,25 @@ public class FileManager{
 	
 	/**
 	 * Renames file
+	 * @param name
+	 * @param file
+	 * @param destination
 	 */
-	public boolean renameFile(String name, File file) {
-		return file.renameTo(file);
+	public void renameFile(String name, File file, File destination) {
+		if (!file.isDirectory()) {
+			Path source = Paths.get(file.getAbsolutePath());
+			File destFile = new File(destination.getAbsolutePath() + "/" + name);
+			Path destPath = Paths.get(destFile.getAbsolutePath());
+			try {
+				Files.move(source, destPath, StandardCopyOption.REPLACE_EXISTING);
+				System.out.println(destFile.getName() + " successfully renamed. Output location: " + destFile.getAbsolutePath());
+			} catch (FileAlreadyExistsException e) {
+				System.out.println("File " + destination.getName() + " already exists.");
+			} catch (IOException e) {
+				System.out.println("IOException when processing file " + file.getName() + "\n" + e.getMessage());
+			} catch (Exception e) {
+				System.out.println("Exception when processing file " + file.getName() + "\n" + e.getMessage());
+			}
+		}
 	}
 }
