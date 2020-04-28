@@ -146,20 +146,33 @@ public class FileManager {
 	}
 	
 	/**
-	 * Sorts files in listing alphabetically
+	 * Sends directories to the back of the arraylist to prevent logic errors when sorting
+	 */
+	public void sendDirectoriesBack() {
+		for (int i = 0; i < fileList.size(); i++) {
+			if (fileList.get(i).isDirectory()) {
+				fileList.add(fileList.get(i));
+				fileList.remove(i);
+			}
+		}
+	}
+	
+	/**
+	 * Sorts files in listing alphabetically (IS CAP SENSITIVE)
 	 */
 	public ArrayList<File> sortAlphabet() {
-		Collections.sort(fileList, compareNames);
+		sendDirectoriesBack();
+		fileList.sort(compareNames);
 		return fileList;
 	}
 	
 	/**
-	 * Sorts files in listing reverse alphabetically
+	 * Sorts files in listing reverse alphabetically (IS CAP SENSITIVE)
 	 * @return 
 	 */
 	public ArrayList<File> sortRevAlphabet() {
-		Collections.sort(fileList, compareNames);
-		Collections.sort(fileList, Collections.reverseOrder());
+		sendDirectoriesBack();
+		fileList.sort(Collections.reverseOrder(compareNames));
 		return fileList;
 	}
 	
@@ -168,7 +181,8 @@ public class FileManager {
 	 * @return 
 	 */
 	public ArrayList<File> sortSizeIncreasing() {
-		Collections.sort(fileList, compareSize);
+		sendDirectoriesBack();
+		fileList.sort(compareSize);
 		return fileList;
 	}
 	
@@ -177,8 +191,8 @@ public class FileManager {
 	 * @return 
 	 */
 	public ArrayList<File> sortSizeDecreasing() {
-		Collections.sort(fileList, compareSize);
-		Collections.sort(fileList, Collections.reverseOrder());
+		sendDirectoriesBack();
+		fileList.sort(Collections.reverseOrder(compareSize));
 		
 		return fileList;
 	}
@@ -192,7 +206,13 @@ public class FileManager {
 			double size1 = file1.length();
 			double size2 = file2.length();
 			
-			return (int) (size1 - size2);
+			if (size1 > size2) {
+				return 1;
+			} else if (size1 < size2) {
+				return -1;
+			} else {
+				return 0;
+			}
 		}
 	};
 	
@@ -202,8 +222,8 @@ public class FileManager {
 	Comparator<File> compareNames = new Comparator<File>(){
 		@Override
 		public int compare(File file1, File file2) {
-			int name1 = file1.getName().charAt(0);
-			int name2 = file2.getName().charAt(0);
+			char name1 = file1.getName().charAt(0);
+			char name2 = file2.getName().charAt(0);
 			
 			return name1 - name2;
 		}

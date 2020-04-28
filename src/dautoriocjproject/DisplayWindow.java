@@ -362,20 +362,26 @@ public class DisplayWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_SetSuffixButtonActionPerformed
 
     private void NumberFilesToggleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_NumberFilesToggleItemStateChanged
-        // TODO add your handling code here:
+        // Netbeans won't let me remove these empty methods.
     }//GEN-LAST:event_NumberFilesToggleItemStateChanged
 
     private void NumberFilesToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberFilesToggleActionPerformed
 		if (FILE_MANAGER.isNumberFiles()) {
 			FILE_MANAGER.setNumberFiles(false);
 			NumberFilesToggle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DAutorioCJProject/images/004-shape.png")));
+			for (int i = 0; i < fileList.size(); i++) {
+				if (!fileList.get(i).isDirectory()) {
+					FileTable.getModel().setValueAt(FILE_MANAGER.getFileName(fileList.get(i)) + FILE_MANAGER.getFileExtension(fileList.get(i)), i, 0);
+				}
+			}
 		} else {
 			int startNum = 0;
 			FILE_MANAGER.setNumberFiles(true);
 			NumberFilesToggle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DAutorioCJProject/images/003-accept.png")));
 			for (int i = 0; i < fileList.size(); i++) {
 				if (!fileList.get(i).isDirectory()) {
-					FileTable.getModel().setValueAt(FILE_MANAGER.getFileName(fileList.get(i)) + "-" + i + FILE_MANAGER.getFileExtension(fileList.get(i)), i, 0);
+					FileTable.getModel().setValueAt(FILE_MANAGER.getFileName(fileList.get(i)) + "-" + startNum + FILE_MANAGER.getFileExtension(fileList.get(i)), i, 0);
+					startNum++;
 				}
 			}
 		}
@@ -440,7 +446,7 @@ public class DisplayWindow extends javax.swing.JFrame {
 	private void populateFileTable() {
 		int numberOfFiles = 0;
 		// Wipes the entire table before reconstructing it
-		for (int i = fileTableModel.getRowCount(); i > 0; i--) {
+		for (int i = fileTableModel.getRowCount() - 1; i > 0; i--) {
 			fileTableModel.removeRow(i);
 		}
 		for (int i = 0; i < fileList.size(); i++) {
@@ -462,6 +468,18 @@ public class DisplayWindow extends javax.swing.JFrame {
 				FileTable.getModel().setValueAt(fileList.get(i).getName(), i, 4);
 				System.out.println("File listed: " + fileList.get(i).getName());
 				numberOfFiles++;
+			} else {
+				// New Names
+				FileTable.getModel().setValueAt(fileList.get(i).getName(), i, 0);
+				// File Types
+				FileTable.getModel().setValueAt("Folder", i, 1);
+				// Size
+				FileTable.getModel().setValueAt("N/A", i, 2);
+				// Locations
+				FileTable.getModel().setValueAt(fileList.get(i).getAbsolutePath(), i, 3);
+				// Old Names
+				FileTable.getModel().setValueAt(fileList.get(i).getName(), i, 4);
+				System.out.println("File listed: " + fileList.get(i).getName());
 			}
 		}
 		
