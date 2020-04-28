@@ -320,11 +320,11 @@ public class DisplayWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_FileBrowserFrameWindowOpened
 
     private void PrefixTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrefixTextFieldActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_PrefixTextFieldActionPerformed
 
     private void RecursiveToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecursiveToggleActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_RecursiveToggleActionPerformed
 
     private void RecursiveToggleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_RecursiveToggleItemStateChanged
@@ -441,7 +441,7 @@ public class DisplayWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ExportButtonActionPerformed
 
 	/**
-	 * Populates the table with fileList information
+	 * Populates the table with current fileList information. Used mainly to refresh the table.
 	 */
 	private void populateFileTable() {
 		int numberOfFiles = 0;
